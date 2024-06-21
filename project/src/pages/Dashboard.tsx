@@ -1,13 +1,13 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import React, { useEffect } from 'react'
 
 function Dashboard() {
+
   return (
     <>
-      <Navbar/>
       <h2>Dashboard</h2>
     </>
   )
+
 }
 
 export default Dashboard

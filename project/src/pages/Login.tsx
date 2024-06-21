@@ -24,7 +24,7 @@ function Login() {
       login(username, password).then(res =>{
         const dt = res.data
         setUser(dt)
-        navigate('/dashboard')
+        navigate('/dashboard', {replace: true} )
       }).catch(err => {
         //console.log("Error", err.message)
         setFormError('Username or Password Fail!')

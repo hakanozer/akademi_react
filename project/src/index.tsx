@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Control from './pages/Control';
 
 
 // Router Config
@@ -16,8 +17,8 @@ const router =
   <Routes>
     <Route path='/' element={<Login/>} />
     <Route path='/register' element={<Register/>} />
-    <Route path='/dashboard' element={<Dashboard/>} />
-    <Route path='/profile' element={<Profile/>} />
+    <Route path='/dashboard' element={ <Control item={<Dashboard />} /> } />
+    <Route path='/profile' element={ <Control item={<Profile />} /> } />
   </Routes>
 </BrowserRouter>
 

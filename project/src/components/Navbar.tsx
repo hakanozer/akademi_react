@@ -1,7 +1,15 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { IUser } from '../models/IUser'
 
-function Navbar() {
+function Navbar(props: {user?: IUser}) {
+
+  const navigate = useNavigate()  
+  const logOut = () => {
+    localStorage.removeItem('user')
+    navigate('/', {replace: true})
+  }  
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
@@ -19,17 +27,19 @@ function Navbar() {
             </li>
             <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                User
             </a>
             <ul className="dropdown-menu">
                 <li><a className="dropdown-item" href="#">Action</a></li>
                 <li><a className="dropdown-item" href="#">Another action</a></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li><a onClick={logOut} className="dropdown-item" role='button'>Logout</a></li>
             </ul>
             </li>
             <li className="nav-item">
-            <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                { props.user && 
+                    <a className="nav-link disabled" aria-disabled="true">{ props.user.firstName + ' '+ props.user.lastName }</a>
+                }
             </li>
         </ul>
         <form className="d-flex" role="search">
