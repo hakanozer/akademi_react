@@ -1,12 +1,14 @@
 import React, { useState, FormEvent } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { login } from '../utils/api'
+import { setUser } from '../utils/storge'
 
 function Login() {
 
   const navigate = useNavigate()
 
-  const [username, setUserName] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUserName] = useState('emilys')
+  const [password, setPassword] = useState('emilyspass')
   const [formError, setFormError] = useState('')
 
   const loginUser = (evt: FormEvent) => {
@@ -19,7 +21,15 @@ function Login() {
       //window.alert('Password Empty!')
       setFormError('Password Empty!')
     }else {
-      navigate('/dashboard')
+      login(username, password).then(res =>{
+        const dt = res.data
+        setUser(dt)
+        navigate('/dashboard')
+      }).catch(err => {
+        //console.log("Error", err.message)
+        setFormError('Username or Password Fail!')
+      })
+      console.log("this line call")
       //window.location.href = '/dashboard'
     }
   }
@@ -40,10 +50,10 @@ function Login() {
 
                 <form onSubmit={loginUser}>
                     <div className='mb-3'>
-                        <input onChange={(evt) => setUserName(evt.target.value)}  placeholder='Username' className='form-control' />
+                        <input defaultValue={username} onChange={(evt) => setUserName(evt.target.value)}  placeholder='Username' className='form-control' />
                     </div>
                     <div className='mb-3'>
-                        <input onChange={(evt) => setPassword(evt.target.value)}  type='password' placeholder='Password' className='form-control' />
+                        <input defaultValue={password} onChange={(evt) => setPassword(evt.target.value)}  type='password' placeholder='Password' className='form-control' />
                     </div>
                     <button className='btn btn-success'>Send</button>
                     <NavLink to={'/register'}  className='btn btn-danger mx-1'>Register</NavLink>
