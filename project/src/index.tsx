@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Control from './pages/Control';
+import ProductDetail from './pages/ProductDetail';
 
 
 // Router Config
@@ -19,6 +20,7 @@ const router =
     <Route path='/register' element={<Register/>} />
     <Route path='/dashboard' element={ <Control item={<Dashboard />} /> } />
     <Route path='/profile' element={ <Control item={<Profile />} /> } />
+    <Route path='/productDetail/:pid' element={ <Control item={<ProductDetail />} /> } />
   </Routes>
 </BrowserRouter>
 

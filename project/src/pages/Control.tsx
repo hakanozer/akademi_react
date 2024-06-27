@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 function Control( props: {item: JSX.Element} ) {
 
   const user = getUser()  
-
+  
   return (
     <>
         {

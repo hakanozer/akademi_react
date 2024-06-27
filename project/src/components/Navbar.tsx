@@ -4,6 +4,7 @@ import { IUser } from '../models/IUser'
 
 function Navbar(props: {user?: IUser}) {
 
+  //console.log(process.env.NODE_ENV)
   const navigate = useNavigate()  
   const logOut = () => {
     localStorage.removeItem('user')

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { IUser } from "../models/IUser";
+import { IProducts } from "../models/IProducts";
 
-const baseURL = 'https://dummyjson.com/'
+const baseURL = process.env.REACT_APP_BASE_URL!
 const timeOut = 15000
 
 const config = axios.create({
@@ -17,4 +18,8 @@ export const login = (username: string, password: string) => {
         password: password
     }
     return config.post<IUser>('auth/login', sendObj)
+}
+
+export const allProducts = () => {
+    return config.get<IProducts>('products')
 }
