@@ -20,10 +20,14 @@ export const login = (username: string, password: string) => {
     return config.post<IUser>('auth/login', sendObj)
 }
 
-export const allProducts = () => {
-    return config.get<IProducts>('products')
+export const allProducts = (skip: number, limit: number) => {
+    return config.get<IProducts>('products', {params: {limit: limit, skip: skip}})
 }
 
 export const singleProduct = (id: string) => {
     return config.get<Product>('products/'+id)
+}
+
+export const search = (q: string, skip: number, limit: number) => {
+    return config.get<IProducts>('products/search', {params: {q: q, limit: limit, skip: skip}})
 }

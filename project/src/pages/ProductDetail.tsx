@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { Product } from '../models/IProducts'
 import { singleProduct } from '../utils/api'
 import loading from '../assets/loading.gif'
+import { allLike, findLike, likeControl } from '../utils/storge'
+import { LikesContext } from '../context/LikesContext'
 
 function ProductDetail() {
 
+  const [likesStatus, setLikesStatus] = useState(false)
   const [bigImage, setBigImage] = useState("")
   const [product, setProduct] = useState<Product>()
   const location = useLocation()
@@ -24,13 +27,23 @@ function ProductDetail() {
   useEffect(() => {
     if (product) {
       setBigImage(product!.images[0])
+      const likeStatu = findLike(product!.id)
+      setLikesStatus(likeStatu)
     }
   }, [product])
 
   useEffect(() => {
     const item = location.state as Product
-    //console.log(item.title)
   }, [])
+
+  // use context
+  const likesContext = useContext(LikesContext)
+  const fncLike = () => {
+    likeControl(product!.id)
+    const likeStatu = findLike(product!.id)
+    setLikesStatus(likeStatu)
+    likesContext.setLikes(allLike())
+  }
   
   return (
     <>
@@ -48,14 +61,18 @@ function ProductDetail() {
               <h2>{product.title}</h2>
               <p>{product.description}</p>
               { product.tags.map((tag, index) => 
-                <span className="badge text-bg-secondary">{tag}</span>
+                <span key={index} className="badge text-bg-secondary">{tag}</span>
               )}
+              <div>
+                <i onClick={fncLike} role='button' className={"bi bi-suit-heart" + (likesStatus === true ? '-fill': '')} style={{fontSize: 30, color: (likesStatus === true ? 'red': '') }}></i>
+              </div>
+              
             </div>
             <div className='col-sm-6'>
               <img src={bigImage} className='img-fluid' />
               <hr/>
               {product.images.map((iUrl, index) =>
-                <img src={iUrl} onClick={() => setBigImage(iUrl)} role='button' className='img-thumbnail me-2' width={100} />
+                <img key={index} src={iUrl} onClick={() => setBigImage(iUrl)} role='button' className='img-thumbnail me-2' width={100} />
               )}
             </div>
           </div>
