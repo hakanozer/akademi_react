@@ -5,6 +5,7 @@ import { singleProduct } from '../utils/api'
 import loading from '../assets/loading.gif'
 import { allLike, findLike, likeControl } from '../utils/storge'
 import { LikesContext } from '../context/LikesContext'
+import { Helmet } from 'react-helmet'
 
 function ProductDetail() {
 
@@ -56,6 +57,10 @@ function ProductDetail() {
       }
       {product && 
         <>
+        <Helmet>
+            <title>{product.title}</title>
+            <meta name="description" content={product.description} />
+        </Helmet>
           <div className='row'>
             <div className='col-sm-6'>
               <h2>{product.title}</h2>

@@ -2,6 +2,7 @@ import React, { useState, FormEvent } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { login } from '../utils/api'
 import { setUser } from '../utils/storge'
+import { Helmet } from 'react-helmet'
 
 function Login() {
 
@@ -36,6 +37,10 @@ function Login() {
 
   return (
     <>
+        <Helmet>
+            <title>User Login</title>
+            <meta name="description" content="UserLogin Detail" />
+        </Helmet>
         <div className='row'>
             <div className='col-xs-12 col-sm-12 col-md-2 col-lg-4 col-xl-4 col-xxl-4'></div>
             <div className='col-xs-12 col-sm-12 col-md-8 col-lg-4 col-xl-4 col-xxl-4'>

@@ -3,6 +3,7 @@ import { LikesContext } from '../context/LikesContext'
 import { singleProduct } from '../utils/api'
 import { Product } from '../models/IProducts'
 import ProductItem from '../components/ProductItem'
+import { Helmet } from 'react-helmet'
 
 function Likes() {
 
@@ -26,6 +27,10 @@ function Likes() {
 
   return (
     <>
+      <Helmet>
+          <title>Like</title>
+          <meta name="description" content="Like Detail" />
+      </Helmet>
         <h2>Likes</h2>
         <div className='row'>
             { arr.map((item, index) => 

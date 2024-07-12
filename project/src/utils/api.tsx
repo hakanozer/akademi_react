@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IUser } from "../models/IUser";
 import { IProducts, Product } from "../models/IProducts";
+import { IQuote } from "../models/IQuote";
 
 const baseURL = process.env.REACT_APP_BASE_URL!
 const timeOut = 15000
@@ -30,4 +31,8 @@ export const singleProduct = (id: string) => {
 
 export const search = (q: string, skip: number, limit: number) => {
     return config.get<IProducts>('products/search', {params: {q: q, limit: limit, skip: skip}})
+}
+
+export const randomQuote = () => {
+    return config.get<IQuote>('quotes/random')
 }

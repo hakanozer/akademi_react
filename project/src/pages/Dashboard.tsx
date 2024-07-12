@@ -5,8 +5,14 @@ import ProductItem from '../components/ProductItem'
 import Pagination from '../components/Pagination'
 import loadGif from '../assets/loading.gif'
 import { PageCountContext } from '../context/PageCountContext'
+import { useSelector } from 'react-redux'
+import { StateType } from '../useRedux/store'
+import { Helmet } from 'react-helmet'
 
 function Dashboard() {
+
+  // use redux read data
+  const quotes = useSelector((item: StateType) => item.QuotesReducer) 
 
   const pageContext = useContext(PageCountContext)
   const [products, setProducts] = useState<IProducts | null>()
@@ -27,7 +33,14 @@ function Dashboard() {
 
   return (
     <>
+      <Helmet>
+          <title>Dashboard</title>
+          <meta name="description" content="Dashboard Detail" />
+      </Helmet>
       <h2>Dashboard</h2>
+      <div className="alert alert-light" role="alert">
+      {quotes.quote}
+      </div>
       { !products &&
           <center><img src={loadGif} width={100} /></center>
       }

@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, SetStateAction, useState } from "react";
+import { createContext, FC, PropsWithChildren, useState } from "react";
 
 interface ILikeContext {
     likes: number[],
@@ -12,7 +12,7 @@ export const LikesContext = createContext<ILikeContext>({
 
 export const LikesProvider:FC<PropsWithChildren> = (props) => {
     const [likes, setLikes] = useState<number[]>([])
-    const likesObj = {likes, setLikes}
+    const likesObj = {likes, setLikes}    
     return (
         <LikesContext.Provider value={likesObj}>
             {props.children}

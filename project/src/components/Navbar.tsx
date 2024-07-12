@@ -4,14 +4,32 @@ import { IUser } from '../models/IUser'
 import { allLike } from '../utils/storge'
 import { LikesContext } from '../context/LikesContext'
 import { PageCountContext } from '../context/PageCountContext'
+import { randomQuote } from '../utils/api'
+import { useDispatch } from 'react-redux'
+import { QuotesAction } from '../useRedux/QuotesAction'
+import { QuotesType } from '../useRedux/QuotesType'
 
 function Navbar(props: {user?: IUser}) {
+
+  // userRedux
+  const dispatch = useDispatch()
 
   // use context
   const likesContext = useContext(LikesContext)
   const pageContext = useContext(PageCountContext)
   useEffect(() => {
     likesContext.setLikes(allLike())
+    setTimeout(() => {
+      randomQuote().then(res => {
+        const item = res.data
+        const sendObj: QuotesAction = {
+          type: QuotesType.QUOTE_LIST,
+          payload: item
+        }
+        dispatch(sendObj)
+      })
+    }, 2000);
+
   }, [])
   
 
@@ -42,6 +60,9 @@ function Navbar(props: {user?: IUser}) {
             </li>
             <li className="nav-item">
             <NavLink to='/likes' className="nav-link">Likes</NavLink>
+            </li>
+            <li className="nav-item">
+            <NavLink to='/quote' className="nav-link">Quote</NavLink>
             </li>
             <li className="nav-item">
             <NavLink to='/profile' className="nav-link">Profile</NavLink>

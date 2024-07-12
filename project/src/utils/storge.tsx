@@ -26,7 +26,7 @@ export const likeControl = (id: number) => {
     if(stLikes) {
         // add - remove
         const arr = JSON.parse(stLikes) as number[]
-        const index = arr.findIndex(item => item == id)
+        const index = arr.findIndex(item => item === id)
         if (index > -1) {
             // remove
             arr.splice(index, 1)
@@ -58,7 +58,7 @@ export const findLike = (id: number) => {
     const stLikes = localStorage.getItem('likes')
     if (stLikes) {
         const arr = JSON.parse(stLikes) as number[]
-        return arr.some(item => item == id)
+        return arr.some(item => item === id)
     }
     return false
 }
