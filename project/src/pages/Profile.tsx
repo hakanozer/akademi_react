@@ -1,8 +1,13 @@
-import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { getUser } from '../utils/storge'
 import { validateInput } from '../utils/validate'
+import CustomInput from '../components/CustomInput'
 
 function Profile() {
+
+  // use Transition
+  const [isPending, startTransition] = useTransition();
+
 
   // use refs
   const firstRef = useRef<HTMLInputElement>(null)
@@ -38,7 +43,6 @@ function Profile() {
     console.log(firstRef.current?.value)
       if (firstName === "") {
         validateInput(firstRef)
-        
       } else if (lastName === "") {
         validateInput(lastRef)
       }else if (email === "") {
@@ -60,6 +64,19 @@ function Profile() {
   }
   const memo = useMemo(() => sampleData(), [])
 
+  const [visible, setVisible] = useState(false)
+  const [alertText, setAlertText] = useState('')
+  const showAlert = () => {
+    
+    setTimeout(() => { 
+      startTransition(() => { 
+        setVisible(!visible)
+        setAlertText('Alert Message!')
+      })
+    }, 3000);
+    
+  }
+
   return (
     <>
       <div className='row'>
@@ -67,20 +84,27 @@ function Profile() {
           <h2>Profile</h2>
           {user &&
             <form onSubmit={sendForm} ref={formRef} >
-              <div className='mb-3'>
-                <input ref={firstRef} onChange={(evt) => setFirstName(evt.target.value)} value={firstName} className='form-control' placeholder='FirstName' />
-              </div>
-              <div className='mb-3'>
-                <input ref={lastRef} onChange={(evt) => setLastName(evt.target.value)} value={lastName} className='form-control' placeholder='LastName' />
-              </div>
-              <div className='mb-3'>
-                <input ref={emailRef} onChange={(evt) => setEmail(evt.target.value)} value={email} className='form-control' placeholder='Email' />
-              </div>
+              <CustomInput title='FirstName' state={firstName} setState={setFirstName} inputRef={firstRef} />
+              <CustomInput title='LastName' state={lastName} setState={setLastName} inputRef={lastRef} />
+              <CustomInput title='Email' state={email} setState={setEmail} inputRef={emailRef} />
               <button className='btn btn-success'>Send</button>
             </form>
           }
         </div>
         <div className='col-sm-6'>
+          <button onClick={showAlert} className='btn btn-danger btn-sm'>Alert - Show / Hide</button>
+          <div>{isPending === true ? 'true' : 'false'}</div>
+          <div 
+            style={{
+              backgroundColor: '#828282',
+              marginTop:5,
+              borderRadius: 5,
+              padding: 5,
+              color: 'white', 
+              opacity: isPending ? 0 : visible ? 1 : 0
+            }}
+          >{alertText}</div>
+          <hr/>
           {memo.map((item, index) => 
             <h4 key={index}>{item}</h4>
           )}
